@@ -1,5 +1,6 @@
 package ru.netology.manager;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.netology.domain.Movie;
 
@@ -20,6 +21,20 @@ class MovieManagerTest {
 
     Movie[] expected = {tenth, ninth, eighth, seventh, sixth, fifth, fourth, third, second, first};
 
+    @BeforeEach
+    public void setUp(){
+        manager.addMovie(first);
+        manager.addMovie(second);
+        manager.addMovie(third);
+        manager.addMovie(fourth);
+        manager.addMovie(fifth);
+        manager.addMovie(sixth);
+        manager.addMovie(seventh);
+        manager.addMovie(eighth);
+        manager.addMovie(ninth);
+        manager.addMovie(tenth);
+    }
+
     @Test
     void giveOutTenMovies() {
         MovieManager manager = new MovieManager(10);
@@ -35,5 +50,19 @@ class MovieManagerTest {
         manager.addMovie(tenth);
         Movie[] actual = manager.getAddLastMovie();
         assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    void giveOutActualNumberMovies() {
+        MovieManager manager = new MovieManager(5);
+        manager.addMovie(first);
+        manager.addMovie(second);
+        manager.addMovie(third);
+        manager.addMovie(fourth);
+        Movie movieAdd = new Movie(5, "The Invisible Man", "fantasy", true);
+        manager.addMovie(movieAdd);
+        Movie[] actual = manager.getAddLastMovie();
+        Movie[] expected = {new Movie(5, "The Invisible Man", "fantasy", true), fourth, third, second, first};
+        assertArrayEquals(actual, expected);
     }
 }
