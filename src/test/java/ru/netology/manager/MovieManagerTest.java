@@ -6,6 +6,7 @@ import ru.netology.domain.Movie;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+
 class MovieManagerTest {
     MovieManager manager = new MovieManager();
     private Movie first = new Movie(1, "Bloodshot", "thriller", true);
@@ -36,6 +37,20 @@ class MovieManagerTest {
     }
 
     @Test
+    void giveOutActualNumberMovies() {
+        MovieManager manager = new MovieManager(5);
+        manager.addMovie(first);
+        manager.addMovie(second);
+        manager.addMovie(third);
+        manager.addMovie(fourth);
+        Movie movieAdd = new Movie(5, "The Invisible Man", "fantasy", true);
+        manager.addMovie(movieAdd);
+        Movie[] actual = manager.getAddLastMovie();
+        Movie[] expected = {new Movie(5, "The Invisible Man", "fantasy", true), fourth, third, second, first};
+        assertArrayEquals(actual, expected);
+    }
+
+    @Test
     void giveOutTenMovies() {
         MovieManager manager = new MovieManager(10);
         manager.addMovie(first);
@@ -50,19 +65,5 @@ class MovieManagerTest {
         manager.addMovie(tenth);
         Movie[] actual = manager.getAddLastMovie();
         assertArrayEquals(expected, actual);
-    }
-
-    @Test
-    void giveOutActualNumberMovies() {
-        MovieManager manager = new MovieManager(5);
-        manager.addMovie(first);
-        manager.addMovie(second);
-        manager.addMovie(third);
-        manager.addMovie(fourth);
-        Movie movieAdd = new Movie(5, "The Invisible Man", "fantasy", true);
-        manager.addMovie(movieAdd);
-        Movie[] actual = manager.getAddLastMovie();
-        Movie[] expected = {new Movie(5, "The Invisible Man", "fantasy", true), fourth, third, second, first};
-        assertArrayEquals(actual, expected);
     }
 }
