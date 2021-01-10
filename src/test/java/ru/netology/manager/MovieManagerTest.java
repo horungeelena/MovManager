@@ -4,10 +4,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.netology.domain.Movie;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
 
-class MovieManagerTest {
+public class MovieManagerTest {
     MovieManager manager = new MovieManager();
     private Movie first = new Movie(1, "Bloodshot", "thriller", true);
     private Movie second = new Movie(2, "Onward", "cartoon", true);
@@ -64,6 +64,38 @@ class MovieManagerTest {
         manager.addMovie(ninth);
         manager.addMovie(tenth);
         Movie[] actual = manager.getAddLastMovie();
+        Movie[] expected = new Movie[] {tenth,ninth,eighth, seventh, sixth, fifth, fourth, third, second, first};
+        assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    void giveOutFifthLimitMovies() {
+        MovieManager manager = new MovieManager(5);
+        manager.addMovie(first);
+        manager.addMovie(second);
+        manager.addMovie(third);
+        manager.addMovie(fourth);
+        manager.addMovie(fifth);
+        Movie[] actual = manager.getAddLastMovie();
+        Movie[] expected = new Movie[] {fifth, fourth, third, second, first};
+        assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    void giveOutLimitLessListMovies() {
+        MovieManager manager = new MovieManager(8);
+        manager.addMovie(first);
+        manager.addMovie(second);
+        manager.addMovie(third);
+        manager.addMovie(fourth);
+        manager.addMovie(fifth);
+        manager.addMovie(sixth);
+        manager.addMovie(seventh);
+        manager.addMovie(eighth);
+        manager.addMovie(ninth);
+        manager.addMovie(tenth);
+        Movie[] actual = manager.getAddLastMovie();
+        Movie[] expected = new Movie[]{tenth, ninth, eighth, seventh, sixth, fifth, fourth, third};
         assertArrayEquals(expected, actual);
     }
 }
